@@ -9,7 +9,7 @@ import { createPages as createSveltePages } from "./svelte/pages.js";
 
 const frameworkConfigs = {
   React: (cwd, pages, opt, name) => writeReactConfigs(cwd, pages, opt, name),
-  Svelte: (cwd, pages, opt, name) => writeSvelteConfigs(cwd, name),
+  Svelte: (cwd, pages, opt, name, answers) => writeSvelteConfigs(cwd, name, answers),
 };
 
 const frameworkPages = {
@@ -48,13 +48,13 @@ async function setupViteBased(gen, name, answers) {
 
   writeBaseConfigs(cwd, name, framework);
   const fwConfigs = frameworkConfigs[framework];
-  if (fwConfigs) fwConfigs(cwd, pages, frameworkOptionalDeps, name);
+  if (fwConfigs) fwConfigs(cwd, pages, frameworkOptionalDeps, name, answers);
 
   const fwPages = frameworkPages[framework];
   if (fwPages) fwPages(cwd, pages);
 
   await gitInit(gen, name);
-  await installDeps(gen, cwd, framework, frameworkOptionalDeps, generalOptionalDeps);
+  await installDeps(gen, cwd, framework, answers);
 }
 
 async function setupAstro(gen, name, answers) {

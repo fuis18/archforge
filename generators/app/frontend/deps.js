@@ -1,5 +1,5 @@
 import * as reactDeps from "./react/deps.js";
-import * as svelteDeps from "./svelte/deps.js";
+import { getDeps as getSvelteDeps } from "./svelte/deps.js";
 
 // --- General frontend deps (shared across all Vite-based frameworks) ---
 const generalDeps = [];
@@ -8,7 +8,13 @@ const generalDevDeps = ["tailwindcss", "@tailwindcss/vite", "@types/node"];
 // --- Framework deps registry ---
 const frameworkDeps = {
   React: reactDeps,
-  Svelte: svelteDeps,
+};
+
+const getFrameworkDeps = (framework, isAppWeb) => {
+  if (framework === 'Svelte') {
+    return getSvelteDeps(isAppWeb);
+  }
+  return frameworkDeps[framework];
 };
 
 // --- General optional deps (keyed by choice name) ---
@@ -26,10 +32,14 @@ async function installPkgs(gen, cwd, deps, devDeps) {
   }
 }
 
-export async function installDeps(gen, cwd, framework, frameworkOptional = [], generalOptional = []) {
+export async function installDeps(gen, cwd, framework, answers) {
+  const frameworkOptional = answers.frameworkOptionalDeps || [];
+  const generalOptional = answers.generalOptionalDeps || [];
+  const isAppWeb = answers.appweb || false;
+
   await installPkgs(gen, cwd, generalDeps, generalDevDeps);
 
-  const fw = frameworkDeps[framework];
+  const fw = getFrameworkDeps(framework, isAppWeb);
   if (!fw) return;
 
   await installPkgs(gen, cwd, fw.deps, fw.devDeps);

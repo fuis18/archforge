@@ -1,9 +1,12 @@
 import { copyTemplate, renderTemplate } from "../configs.js";
 
-export function writeConfigs(projectPath, name) {
+export function writeConfigs(projectPath, name, answers) {
   renderTemplate("svelte", "package.json", projectPath, { name });
   copyTemplate("svelte", "vite.config.ts", projectPath);
-  copyTemplate("svelte", "svelte.config.js", projectPath);
+  renderTemplate("svelte", "svelte.config.js", projectPath, {
+    adapter: answers.appweb ? "static" : "auto",
+    adapterOptions: answers.appweb ? "{ fallback: 'index.html' }" : "",
+  });
   copyTemplate("svelte", "tsconfig.json", projectPath);
   copyTemplate("svelte", "eslint.config.js", projectPath);
   

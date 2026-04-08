@@ -53,6 +53,9 @@ export default class extends Generator {
 
       const { generalOptionalDeps } = await this.prompt([generalOptionalPrompt]);
       this.answers.generalOptionalDeps = generalOptionalDeps || [];
+
+      const { appweb } = await this.prompt([appwebPrompt]);
+      this.answers.appweb = appweb;
     }
 
     if (this.answers.projectType === "Backend") {
@@ -67,8 +70,7 @@ export default class extends Generator {
     if (projectType === "Frontend") {
       await frontend.setup(this, name, this.answers);
 
-      const { appweb: wantAppWeb } = await this.prompt([appwebPrompt]);
-      if (wantAppWeb) {
+      if (this.answers.appweb) {
         const { appwebOptionalDeps } = await this.prompt([appwebOptionalPrompt]);
         this.answers.appwebOptionalDeps = appwebOptionalDeps || [];
         await appweb.setup(this, name, this.answers);

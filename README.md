@@ -5,8 +5,32 @@ Un generador de proyectos Yeoman para crear aplicaciones web modernas con React,
 ## 🚀 Características
 
 - **App Web**: Aplicaciones de escritorio multiplataforma con React + Tauri
-- **Frontend**: Aplicaciones web modernas con diversos frameworks
+- **Frontend**: Aplicaciones web modernas con diversos frameworks (React + Svelte)
 - **Backend**: APIs RESTful con diferentes stacks tecnológicos
+
+- **Estado actual**: React y Svelte están implementados. Otras opciones del prompt como Astro, Qwik, NextJS y TanStack Start aún están en desarrollo.
+
+## 🧩 Frontend implementado
+
+### React
+- Genera proyectos con Vite + React 18 + TypeScript
+- Routing con React Router
+- Integración con TailwindCSS
+- ESLint configurado para React, React Hooks y React Refresh
+- Estructura de carpetas generada: `app`, `components`, `constants`, `features`, `pages`, `context`, `lib`
+
+### Svelte
+- Genera proyectos con SvelteKit + TypeScript
+- Usa `@sveltejs/vite-plugin-svelte` y `@sveltejs/kit`
+- ESLint configurado con `eslint-plugin-svelte`
+- Usa `@sveltejs/adapter-auto` para web y `@sveltejs/adapter-static` para AppWeb
+- Estructura de carpetas generada: `src/lib/components`, `src/lib/constants`, `src/lib/features`, `src/lib/pages`
+
+### App Web
+- Implementado como aplicación Tauri con frontend React
+- `bun tauri init` se ejecuta automáticamente
+- Soporta opción opcional de SQL para base de datos Tauri
+- Combina la experiencia web moderna de React con la capacidad de escritorio nativa de Tauri
 
 ## 📦 Instalación
 
