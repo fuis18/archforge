@@ -3,7 +3,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-export const templatesDir = join(__dirname, "..", "templates", "frontend");
+export const templatesDir = join(__dirname, "templates");
 
 // --- Template helpers (shared by framework-specific configs) ---
 

@@ -12,7 +12,7 @@ import {
 } from "./prompts.js";
 import * as frontend from "./frontend/index.js";
 import * as appweb from "./frontend/appweb/index.js";
-import * as backend from "./backend.js";
+import * as backend from "./backend/index.js";
 
 export default class extends Generator {
   constructor(args, opts) {
@@ -43,7 +43,9 @@ export default class extends Generator {
       }
       this.answers.pages = pages;
 
-      const fwOptionalPrompt = getFrameworkOptionalPrompt(this.answers.framework);
+      const fwOptionalPrompt = getFrameworkOptionalPrompt(
+        this.answers.framework,
+      );
       if (fwOptionalPrompt) {
         const { frameworkOptionalDeps } = await this.prompt([fwOptionalPrompt]);
         this.answers.frameworkOptionalDeps = frameworkOptionalDeps || [];
@@ -51,7 +53,9 @@ export default class extends Generator {
         this.answers.frameworkOptionalDeps = [];
       }
 
-      const { generalOptionalDeps } = await this.prompt([generalOptionalPrompt]);
+      const { generalOptionalDeps } = await this.prompt([
+        generalOptionalPrompt,
+      ]);
       this.answers.generalOptionalDeps = generalOptionalDeps || [];
 
       const { appweb } = await this.prompt([appwebPrompt]);
@@ -71,7 +75,9 @@ export default class extends Generator {
       await frontend.setup(this, name, this.answers);
 
       if (this.answers.appweb) {
-        const { appwebOptionalDeps } = await this.prompt([appwebOptionalPrompt]);
+        const { appwebOptionalDeps } = await this.prompt([
+          appwebOptionalPrompt,
+        ]);
         this.answers.appwebOptionalDeps = appwebOptionalDeps || [];
         await appweb.setup(this, name, this.answers);
       }
