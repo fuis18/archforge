@@ -1,0 +1,2 @@
+- Crear una opción para elegi entre Bun y pnpm
+- Crearme un Setup sobre los comandos utilizados
